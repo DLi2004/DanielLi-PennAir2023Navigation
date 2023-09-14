@@ -12,17 +12,7 @@ def distance_between_two_waypoints(waypoint1, waypoint2):
     return sqrt(ground_distance ** 2 + altitude ** 2)
 
 
-def helper(id1, id2):
+if __name__ == "main":
     wps = get_waypoints()
-    return distance_between_two_waypoints(wps[id1-1], wps[id2-1])
-
-
-wps = get_waypoints()
-
-# Create a 2D array of distances between waypoints
-dists = [[0 for _ in range(len(wps))] for _ in range(len(wps))]
-for i in range(len(wps)):
-    for j in range(len(wps)):
-        if i != j:
-            dists[i][j] = distance_between_two_waypoints(
-                wps[i], wps[j])
+    distance_example = distance_between_two_waypoints(0, 1)
+    print(f"Distance between Waypoint 1 and Waypoint 2: {distance_example}")

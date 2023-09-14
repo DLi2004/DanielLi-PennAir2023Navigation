@@ -13,3 +13,9 @@ def get_waypoints():
             wp["id"] = idx
             idx += 1
         return waypoints
+
+
+if __name__ == "main":
+    wps = get_waypoints()
+    print("Waypoints:")
+    print(wps)

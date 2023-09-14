@@ -18,10 +18,8 @@ def create_dists_array():
 
 # Load the distances array
 dists = create_dists_array()
-#dists = [[0, 0, 0, 0, 0], [0, 0, 10, 15, 20], [0, 10, 0, 25, 25], [0, 15, 25, 0, 30], [0, 20, 25, 30, 0]]
 wps = get_waypoints()
 n = len(wps)
-#n = 4
 
 # Memoization array
 memo = [[-1] * (1 << (n + 1)) for _ in range(n + 1)]
@@ -31,6 +29,7 @@ path = [[-1] * (1 << (n + 1)) for _ in range(n + 1)]
 
 
 def min_cost_path(i, mask):
+    """Returns the minimum cost path from node 1 to node i"""
     # Base case: if every node except the 1st and ith bit are set,
     # then we have visited all other nodes and we return
     # the distance from the ith node to the 1st node
@@ -62,28 +61,34 @@ def min_cost_path(i, mask):
     return res
 
 
-ans = float('inf')
-min_i = -1  # To keep track of the node with the minimum cost path
-for i in range(1, n+1):
-    # Find the minimum cost with the path starting at node 1 and ending at node i
-    temp_ans = min(ans, min_cost_path(i, (1 << (n+1))-1) + dists[1][i])
-    if temp_ans < ans:
-        ans = temp_ans
-        min_i = i
+def find_min_cost_path():
+    """Returns the minimum cost path across the whole graph"""
+    ans = float('inf')
+    min_i = -1  # To keep track of the node with the minimum cost path
+    for i in range(1, n+1):
+        # Find the minimum cost with the path starting at node 1 and ending at node i
+        temp_ans = min(ans, min_cost_path(i, (1 << (n+1))-1) + dists[1][i])
+        if temp_ans < ans:
+            ans = temp_ans
+            min_i = i
+
+    # Reconstruct the minimum cost path
+    mask = (1 << (n + 1)) - 1
+    min_path = [0]
+    curr = min_i
+
+    while curr != -1:
+        # Get the next node in the path
+        nxt = path[curr][mask]
+        if nxt != -1:
+            min_path.append(nxt-1)
+            mask &= ~(1 << curr)
+        curr = nxt
+
+    return ans, min_path
 
 
-# Reconstruct the minimum cost path
-mask = (1 << (n + 1)) - 1
-min_path = [1]
-curr = min_i
-
-while curr != -1:
-    # Get the next node in the path
-    nxt = path[curr][mask]
-    min_path.append(nxt)
-    mask &= ~(1 << curr)
-    curr = nxt
-
-
-print(ans)
-print(min_path)
+if __name__ == "__main__":
+    ans, min_path = find_min_cost_path()
+    print(f"Minimum cost: {ans}")
+    print(f"Path: {min_path}")
