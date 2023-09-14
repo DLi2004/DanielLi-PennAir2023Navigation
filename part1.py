@@ -8,6 +8,7 @@ def get_waypoints():
         waypoints = coords["waypoints"]
 
         # Add an id to each waypoint
+        # Used in part3.py
         idx = 0
         for wp in waypoints:
             wp["id"] = idx
@@ -15,7 +16,7 @@ def get_waypoints():
         return waypoints
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     wps = get_waypoints()
     print("Waypoints:")
     print(wps)
