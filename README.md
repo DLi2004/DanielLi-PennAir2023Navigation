@@ -15,3 +15,7 @@ Answer the following questions after you have completed your coding challenge. P
 3. **Please provide instructions on how to run your code.**
 
 4. **Is there any other relevant information that would be helpful for us to know?**
+
+# Usage
+
+To run Part 1, run `python part1.py`. Do the same for parts 2 and 3.
