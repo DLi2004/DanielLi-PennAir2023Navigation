@@ -21,10 +21,10 @@ dists = create_dists_array()
 wps = get_waypoints()
 n = len(wps)
 
-# Memoization array
-memo = [[-1] * (1 << (n + 1)) for _ in range(n + 1)]
+# 2D array to keep track of minimum cost
+costs = [[-1] * (1 << (n + 1)) for _ in range(n + 1)]
 
-# Add a new 2D array to keep track of the path
+# 2D array to keep track of the path
 path = [[-1] * (1 << (n + 1)) for _ in range(n + 1)]
 
 
@@ -40,8 +40,8 @@ def min_cost_path(i, mask):
         return dists[1][i]
 
     # If the value is already calculated, return it
-    if memo[i][mask] != -1:
-        return memo[i][mask]
+    if costs[i][mask] != -1:
+        return costs[i][mask]
 
     res = float('inf')
     # To keep track of the node with the minimum cost path
@@ -60,7 +60,7 @@ def min_cost_path(i, mask):
                 min_j = j
 
     # Save result in memo array and path
-    memo[i][mask] = res
+    costs[i][mask] = res
     path[i][mask] = min_j
     return res
 
